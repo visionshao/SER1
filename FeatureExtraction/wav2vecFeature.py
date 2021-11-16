@@ -5,9 +5,7 @@ import librosa
 import numpy as np
 import pickle
 
-# cp = torch.load('../../model/wav2vec_large.pt',map_location=torch.device('cuda'))
-# model = Wav2VecModel.build_model(cp['args'], task=None)
-# model.load_state_dict([cp['model']])
+
 cp_path = '../../model/wav2vec_large.pt'
 model, cfg, task = fairseq.checkpoint_utils.load_model_ensemble_and_task([cp_path])
 model = model[0]
