@@ -1,0 +1,2 @@
+# feature extraction
+python FeatureExtraction/w2vfeaturize.py --input dataset/iemocap_feature --output C:/Users/LaylarZhang/FYP/model/1116feat  --model C:/Users/LaylarZhang/FYP/model/wav2vec_large.pt --split train valid test

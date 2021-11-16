@@ -21,6 +21,7 @@ dataset_for_experiment = {}
 
 for i in videoIDs:
   file = base + i[4] + '/sentences/wav/' + i + '/'
+  print(file)
   data = []
   for j in videoIDs[i]:
     y, sr = librosa.load(file+j+'.wav',sr=16000)  # y -> (t)
