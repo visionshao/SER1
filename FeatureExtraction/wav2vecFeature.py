@@ -1,15 +1,19 @@
 import torch
+import fairseq
 from fairseq.models.wav2vec import Wav2VecModel
 import librosa
 import numpy as np
 import pickle
 
-cp = torch.load('../../pretrained/wav2vec_large.pt',map_location=torch.device('cuda'))
-model = Wav2VecModel.build_model(cp['args'], task=None)
-model.load_state_dict(cp['model'])
+# cp = torch.load('../../model/wav2vec_large.pt',map_location=torch.device('cuda'))
+# model = Wav2VecModel.build_model(cp['args'], task=None)
+# model.load_state_dict([cp['model']])
+cp_path = '../../model/wav2vec_large.pt'
+model, cfg, task = fairseq.checkpoint_utils.load_model_ensemble_and_task([cp_path])
+model = model[0]
 model.eval()
 
-data = pickle.load(open('../../../dataset/IEMOCAP_features_raw.pkl','rb'), encoding="latin1")
+data = pickle.load(open('../../dataset/IEMOCAP_features_raw.pkl','rb'), encoding="latin1")
 videoIDs, videoSpeakers, videoLabels, videoText, videoAudio, videoVisual, videoSentence, trainVid, testVid = data
 
 base = '../../dataset/IEMOCAP_full_release/Session'
@@ -41,5 +45,5 @@ for i in videoIDs:
 
   dataset_for_experiment[i] = data
 
-with open("/content/drive/My Drive/EmotionRNN2/dataformodel_20_bins.pkl", "wb") as f:
+with open("../../model/1104test.pkl", "wb") as f:
     pickle.dump((dataset_for_experiment,videoLabels,videoSpeakers,trainVid,testVid), f)
